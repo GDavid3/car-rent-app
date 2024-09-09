@@ -16,12 +16,14 @@
         <label for="rentEndId">Rent End</label>
         <input type="date" id="rentEndId" name="rent-end"/>
         <br>
-        <a class="btn btn-primary " href="/cars">Search</a>
+        <a class="btn btn-primary" href="/cars" onclick="location.href=this.href+'?rentstart='+rentStartId.value+'&rentend='+rentEndId.value;return false;">Search</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         rentStartId.min = new Date().toISOString().split("T")[0];
+        rentStartId.value = new Date().toISOString().split("T")[0];
         rentEndId.min = new Date().toISOString().split("T")[0];
+        rentEndId.value = new Date().toISOString().split("T")[0];
     </script>
 </body>
 </html>

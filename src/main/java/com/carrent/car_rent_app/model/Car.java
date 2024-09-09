@@ -2,6 +2,8 @@ package com.carrent.car_rent_app.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -39,4 +41,7 @@ public class Car {
     public void setDaily_price(int daily_price) {
         this.daily_price = daily_price;
     }
+
+    @OneToOne(mappedBy = "car")
+    private Order order;
 }
