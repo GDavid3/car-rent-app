@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/orders")
 public class OrderController {
     @Autowired
-    private OrderRepo orepo;
+    private OrderRepo orderRepo;
 
     @Autowired
-    private CarRepo crepo;
+    private CarRepo carRepo;
 
     @GetMapping("/make")
     public String showRentPage(Model model, @RequestParam int id, @RequestParam int daily_price, @RequestParam String startDate, @RequestParam int daysBetween){
@@ -28,7 +28,9 @@ public class OrderController {
         orderDto.setStart_date(startDate);
         orderDto.setCar_id(id);
         orderDto.setFull_price(String.valueOf(fullPrice) + "$");
+
         model.addAttribute("orderDto", orderDto);
+
         return  "orders/MakeOrder";
     }
 
@@ -39,16 +41,11 @@ public class OrderController {
             return "orders/MakeOrder";
         }
 
-        Order order = new Order();
-        order.setName(orderDto.getName());
-        order.setAddress(orderDto.getAddress());
-        order.setEmail(orderDto.getEmail());
-        order.setPhone_number(orderDto.getPhone_number());
-        order.setDay_count(orderDto.getDay_count());
-        order.setStart_date(orderDto.getStart_date());
-        order.setCar(crepo.findById(orderDto.getCar_id()));
+        Order order = Order.builder().name(orderDto.getName()).address(orderDto.getAddress()).email(orderDto.getEmail()).
+                phone_number(orderDto.getPhone_number()).day_count(orderDto.getDay_count()).start_date(orderDto.getStart_date()).
+                car(carRepo.findById(orderDto.getCar_id())).build();
 
-        orepo.save(order);
+        orderRepo.save(order);
 
         return "redirect:/";
     }

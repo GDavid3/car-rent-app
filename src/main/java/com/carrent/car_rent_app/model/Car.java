@@ -1,8 +1,14 @@
 package com.carrent.car_rent_app.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Builder
+@Getter
+@Setter
 @Table(name = "cars")
 public class Car {
     @Id
@@ -16,30 +22,6 @@ public class Car {
     @Column(nullable = false)
     private int daily_price;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getDaily_price() {
-        return daily_price;
-    }
-
-    public void setDaily_price(int daily_price) {
-        this.daily_price = daily_price;
-    }
-
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
     private Order order;
 }
