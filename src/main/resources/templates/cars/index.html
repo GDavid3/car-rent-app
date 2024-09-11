@@ -7,24 +7,30 @@
     <title>Car rent application</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center">Cars</h1>
+    <div class="container text-center">
+        <h1>Cars</h1>
+        <a class="btn btn-primary" href="/" role="button">Cancel</a>
+        <p th:text="'Available cars for ' + ${daysBetween} + ' day/days from the given date: ' + ${startDate}"></p>
 
         <table class="table table-bordered" style="width: 100%">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>ID</th>
                     <th>Image</th>
-                    <th>Daily Price</th>
+                    <th >Daily Price</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="car: ${cars}">
-                    <td th:text="${car.id}" class="text-center">
-                    <td class="text-center">
+                <tr th:each="car: ${cars}" class="text-center">
+                    <td th:text="${car.id}">
+                    <td>
                         <img th:src="@{'/images/' + ${car.image}}" width="100" alt="...">
                     </td>
-                    <td th:text="@{${car.daily_price} + '$'}" class="text-center">
+                    <td th:text="@{${car.daily_price} + '$'}">
+                    <td style="white-space:nowrap">
+                        <a class="btn btn-primary" th:href="@{/orders/make(id=${car.id},daily_price=${car.daily_price},daysBetween=${daysBetween},startDate=${startDate})}">Rent</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

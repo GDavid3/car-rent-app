@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>Car rent application</title>
+</head>
+<body>
+<div class="container text-center">
+  <h1>I want to rent this car!</h1>
+  <div class="row">
+    <div class="col-md-8 mx-auto rounded border p-4 m-4">
+      <h2 class="text-center mb-5">New Rent</h2>
+
+      <form method="post" th:object="${orderDto}">
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Name</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.name}">
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger" th:errors="${orderDto.name}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Address</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.address}">
+            <p th:if="${#fields.hasErrors('address')}" th:errorclass="text-danger" th:errors="${orderDto.address}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Email</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.email}">
+            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="${orderDto.email}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Phone Number</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.phone_number}">
+            <p th:if="${#fields.hasErrors('phone_number')}" th:errorclass="text-danger" th:errors="${orderDto.phone_number}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Day Count</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.day_count}" type="number" readonly>
+            <p th:if="${#fields.hasErrors('day_count')}" th:errorclass="text-danger" th:errors="${orderDto.day_count}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Start Date</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.start_date}" readonly>
+            <p th:if="${#fields.hasErrors('start_date')}" th:errorclass="text-danger" th:errors="${orderDto.start_date}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Full Price</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.full_price}" type="text" readonly>
+            <p th:if="${#fields.hasErrors('full_price')}" th:errorclass="text-danger" th:errors="${orderDto.full_price}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Car Id</label>
+          <div class="col-sm-8">
+            <input class="form-control" th:field="${orderDto.car_id}" type="number" readonly>
+            <p th:if="${#fields.hasErrors('car_id')}" th:errorclass="text-danger" th:errors="${orderDto.car_id}"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="offset-sm-4 col-sm-4 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          <div class="col-sm-4 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

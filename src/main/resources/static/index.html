@@ -11,7 +11,7 @@
         <h1>Let's rent a car!</h1>
 
         <label for="rentStartId">Rent Start</label>
-        <input type="date" id="rentStartId" name="rent-start"/>
+        <input type="date" id="rentStartId" name="rent-start" onchange="refreshEndDate()"/>
         <br>
         <label for="rentEndId">Rent End</label>
         <input type="date" id="rentEndId" name="rent-end"/>
@@ -23,7 +23,11 @@
         rentStartId.min = new Date().toISOString().split("T")[0];
         rentStartId.value = new Date().toISOString().split("T")[0];
         rentEndId.min = new Date().toISOString().split("T")[0];
-        rentEndId.value = new Date().toISOString().split("T")[0];
+        refreshEndDate();
+
+        function refreshEndDate(){
+            rentEndId.value = rentStartId.value;
+        }
     </script>
 </body>
 </html>

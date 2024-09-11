@@ -9,7 +9,19 @@ public class Order {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String phone_number;
 
     @Column(nullable = false)
     private int day_count;
@@ -18,12 +30,48 @@ public class Order {
     private String start_date;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carid", referencedColumnName = "id")
+    @JoinColumn(name = "carid", referencedColumnName = "id", nullable = false)
     private Car car;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userid", referencedColumnName = "id")
-    private User user;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
 
     public int getDay_count() {
         return day_count;

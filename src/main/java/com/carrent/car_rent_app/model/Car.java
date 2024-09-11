@@ -2,15 +2,13 @@ package com.carrent.car_rent_app.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "cars")
 public class Car {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(nullable = false)
     private String image;
@@ -18,11 +16,11 @@ public class Car {
     @Column(nullable = false)
     private int daily_price;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
