@@ -1,13 +1,13 @@
 package com.carrent.car_rent_app.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "orders")
@@ -35,7 +35,7 @@ public class Order {
     @Column(nullable = false)
     private String start_date;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "carid", referencedColumnName = "id", nullable = false)
     private Car car;
 }

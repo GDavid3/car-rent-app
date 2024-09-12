@@ -22,7 +22,7 @@ public class CarRepoTests {
 
     @Test
     public void OrderRepo_SaveTest(){
-        Car car = Car.builder().image("123.jpg").daily_price(500).build();
+        Car car = Car.builder().image("123.jpg").daily_price(500).active(true).build();
 
         Car savedCar = carRepo.save(car);
 
@@ -34,10 +34,10 @@ public class CarRepoTests {
     public void CarRepo_FindAllTest()
     {
 
-        Car car1 = Car.builder().image("123.jpg").daily_price(500).build();
+        Car car1 = Car.builder().image("123.jpg").daily_price(500).active(true).build();
         carRepo.save(car1);
 
-        Car car2 = Car.builder().image("456.jpg").daily_price(300).build();
+        Car car2 = Car.builder().image("456.jpg").daily_price(300).active(true).build();
         carRepo.save(car2);
 
         List<Car> carList = carRepo.findAll();
@@ -49,7 +49,7 @@ public class CarRepoTests {
     @Test
     public void CarRepo_FindByIdTest()
     {
-        Car car = Car.builder().image("123.jpg").daily_price(500).build();
+        Car car = Car.builder().image("123.jpg").daily_price(500).active(true).build();
 
         carRepo.save(car);
 

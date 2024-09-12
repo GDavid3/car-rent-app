@@ -1,12 +1,14 @@
 package com.carrent.car_rent_app.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "cars")
@@ -22,6 +24,9 @@ public class Car {
     @Column(nullable = false)
     private int daily_price;
 
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
-    private Order order;
+    @Column(nullable = false)
+    private boolean active;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Order> order;
 }
