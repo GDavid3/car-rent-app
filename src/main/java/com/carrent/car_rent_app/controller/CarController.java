@@ -15,7 +15,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,11 +41,10 @@ public class CarController {
         LocalDate endDate = LocalDate.parse(end);
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate)+1;
 
-        List<Order> filteredOrders = orderRepo.findAll().stream()
+        List<Integer> carids = orderRepo.findAll().stream()
                 .filter(x -> !(startDate.isAfter(LocalDate.parse(x.getStart_date()).plusDays(x.getDay_count()-1))
-                || endDate.isBefore(LocalDate.parse(x.getStart_date())))).toList();
-        List<Integer> carids = filteredOrders.stream().map(x -> x.getCar().getId()).toList();
-        List<Car> cars = carRepo.findAll().stream().filter(c -> !carids.contains(c.getId())).toList();
+                || endDate.isBefore(LocalDate.parse(x.getStart_date())))).map(x -> x.getCar().getId()).toList();
+        List<Car> cars = carRepo.findAll().stream().filter(c -> !carids.contains(c.getId()) && c.isActive()).toList();
 
         model.addAttribute("cars", cars);
         model.addAttribute("startDate", startDate);
@@ -58,13 +56,18 @@ public class CarController {
     @GetMapping("/carmanage")
     public String showCarManagePage(Model model)
     {
-        List<Car> cars = carRepo.findAll();
+        LocalDate today = LocalDate.now();
+        List<Integer> carids = orderRepo.findAll().stream()
+                .filter(x -> today.isAfter(LocalDate.parse(x.getStart_date())) &&
+                        today.isBefore(LocalDate.parse(x.getStart_date()).plusDays(x.getDay_count()-1))).map(x -> x.getCar().getId()).toList();
+
+        List<Car> cars = carRepo.findAll().stream().filter(c -> !carids.contains(c.getId())).toList();
         model.addAttribute("cars", cars);
         return "cars/CarsManage";
     }
 
     @GetMapping("/add")
-    public String showRentPage(Model model){
+    public String showAddCarPage(Model model){
         CarDto carDto = new CarDto();
 
         model.addAttribute("carDto", carDto);
@@ -111,5 +114,73 @@ public class CarController {
         carRepo.save(car);
 
         return "redirect:/admin";
+    }
+
+    @GetMapping("/update")
+    public String showUpdateCarPage(Model model, @RequestParam int id)
+    {
+        try {
+            Car car = carRepo.findById(id);
+            model.addAttribute("car", car);
+
+            CarDto carDto = CarDto.builder().daily_price(car.getDaily_price()).active(car.isActive()).build();
+
+            model.addAttribute("carDto", carDto);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception:" + ex.getMessage());
+            return "redirect:/cars/carmanage";
+        }
+
+        return  "cars/UpdateCar";
+    }
+
+    @PostMapping("/update")
+    public String updateCar(Model model, @RequestParam int id, @Valid @ModelAttribute CarDto carDto, BindingResult result)
+    {
+        try {
+            Car car = carRepo.findById(id);
+            model.addAttribute("car", car);
+
+            if (result.hasErrors())
+            {
+                return "cars/UpdateCar";
+            }
+
+            if (!carDto.getImage().isEmpty())
+            {
+                String uploadDir = "public/images/";
+                Path oldImagePath = Paths.get(uploadDir + car.getImage());
+
+                try {
+                    Files.delete(oldImagePath);
+                }
+                catch (Exception ex)
+                {
+                    System.out.println("Exception: " + ex.getMessage());
+                }
+
+                MultipartFile image = carDto.getImage();
+
+                try (InputStream inputStream = image.getInputStream())
+                {
+                    Files.copy(inputStream, Paths.get(uploadDir + image.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                car.setImage(image.getOriginalFilename());
+            }
+
+            car.setDaily_price(carDto.getDaily_price());
+            car.setActive(carDto.isActive());
+
+            carRepo.save(car);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
+        return "redirect:/cars/carmanage";
     }
 }

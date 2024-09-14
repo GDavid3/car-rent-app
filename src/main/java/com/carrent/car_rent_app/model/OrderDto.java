@@ -1,11 +1,13 @@
 package com.carrent.car_rent_app.model;
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDto {
     @NotBlank(message = "The name is required")
     private String name;

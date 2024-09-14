@@ -29,6 +29,4 @@ public class AdminController {
 
         return "admin/OrderListAdminMain";
     }
-
-    //Todo update
 }

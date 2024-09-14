@@ -22,12 +22,10 @@ public class OrderController {
 
     @GetMapping("/make")
     public String showRentPage(Model model, @RequestParam int id, @RequestParam int daily_price, @RequestParam String startDate, @RequestParam int daysBetween){
-        OrderDto orderDto = new OrderDto();
         int fullPrice = daily_price * daysBetween;
-        orderDto.setDay_count(daysBetween);
-        orderDto.setStart_date(startDate);
-        orderDto.setCar_id(id);
-        orderDto.setFull_price(String.valueOf(fullPrice) + "$");
+
+        OrderDto orderDto = OrderDto.builder().day_count(daysBetween).start_date(startDate).
+                car_id(id).full_price(String.valueOf(fullPrice) + "$").build();
 
         model.addAttribute("orderDto", orderDto);
 
