@@ -25,10 +25,10 @@ public class OrderRepoTests {
 
     @Test
     public void OrderRepo_SaveTest(){
-        Car car = Car.builder().image("123.jpg").daily_price(500).active(true).build();
+        Car car = Car.getCarBuild("123.jpg",500);
         carRepo.save(car);
-        Order order = Order.builder().name("Daniel").address("TB street 12").email("ab100@gmail.com")
-                .phone_number("+213 586 210").day_count(3).start_date("2024-09-25").car(car).build();
+        Order order = Order.getOrderBuild("Daniel","TB street 12",
+                "ab100@gmail.com","+213 586 210",1,"2024-09-29", car);
 
         Order savedOrder = orderRepo.save(order);
 
@@ -39,15 +39,15 @@ public class OrderRepoTests {
     @Test
     public void OrderRepo_FindAllTest()
     {
-        Car car1 = Car.builder().image("123.jpg").daily_price(500).active(true).build();
+        Car car1 = Car.getCarBuild("123.jpg",500);
         carRepo.save(car1);
-        Order order1 = Order.builder().name("Daniel").address("TB street 12").email("ab100@gmail.com")
-                .phone_number("+213 586 210").day_count(3).start_date("2024-09-25").car(car1).build();
+        Order order1 = Order.getOrderBuild("Daniel","TB street 12",
+                "ab100@gmail.com","+213 586 210",3,"2024-09-25", car1);
 
-        Car car2 = Car.builder().image("456.jpg").daily_price(300).active(true).build();
+        Car car2 = Car.getCarBuild("456.jpg",300);
         carRepo.save(car2);
-        Order order2 = Order.builder().name("Daniel").address("TB street 12").email("ab100@gmail.com")
-                .phone_number("+213 586 210").day_count(1).start_date("2024-09-29").car(car2).build();
+        Order order2 = Order.getOrderBuild("Daniel","TB street 12",
+                "ab100@gmail.com","+213 586 210",1,"2024-09-29", car2);
 
         orderRepo.save(order1);
         orderRepo.save(order2);

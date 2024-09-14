@@ -38,4 +38,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "carid", referencedColumnName = "id", nullable = false)
     private Car car;
+
+    public static Order getOrderBuild(String name, String address, String email, String phone_number, int day_count, String start_date, Car car1) {
+        return Order.builder().name(name).address(address).email(email)
+                .phone_number(phone_number).day_count(day_count).start_date(start_date).car(car1).build();
+    }
 }

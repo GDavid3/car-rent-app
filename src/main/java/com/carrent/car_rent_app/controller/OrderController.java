@@ -39,9 +39,8 @@ public class OrderController {
             return "orders/MakeOrder";
         }
 
-        Order order = Order.builder().name(orderDto.getName()).address(orderDto.getAddress()).email(orderDto.getEmail()).
-                phone_number(orderDto.getPhone_number()).day_count(orderDto.getDay_count()).start_date(orderDto.getStart_date()).
-                car(carRepo.findById(orderDto.getCar_id())).build();
+        Order order = Order.getOrderBuild(orderDto.getName(),orderDto.getAddress(), orderDto.getEmail(),
+                orderDto.getPhone_number(), orderDto.getDay_count(), orderDto.getStart_date(), carRepo.findById(orderDto.getCar_id()));
 
         orderRepo.save(order);
 

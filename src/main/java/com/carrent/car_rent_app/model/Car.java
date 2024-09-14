@@ -29,4 +29,8 @@ public class Car {
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private List<Order> order;
+
+    public static Car getCarBuild(String image, int daily_price) {
+        return Car.builder().image(image).daily_price(daily_price).active(true).build();
+    }
 }
